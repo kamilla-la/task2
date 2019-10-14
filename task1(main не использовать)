@@ -1,0 +1,99 @@
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayDeque;
+import java.util.Stack;
+import java.util.Queue;
+
+public class Zadanie2 {
+
+public static void main(String[] args) throws IOException {
+int number=1230000;
+int n=(int)Math.ceil(Math.log10(number));
+ttt(number);
+System.out.print(" ");
+ttt2(number,n);
+System.out.print(" ");
+ttt3(number,n);
+System.out.print(" ");
+ttt4(number);
+    System.out.println("");
+txt();
+
+}
+
+public static void ttt(int number) {
+Stack<Byte> digits= new Stack<Byte>();
+while(number!=0) {
+digits.push((byte)(number%10));
+number/=10;
+}
+while(!digits.isEmpty()) {
+System.out.print(digits.pop());
+}
+}
+
+public static void ttt2(int number,int n) {
+Stack<Byte> digits=new Stack<Byte>();
+while(n!=0) {
+digits.push((byte)(number/Math.pow(10, n-1)));//Выделяем целую часть при делении на 10 в степени разряд-1
+number-=(int)(number/Math.pow(10, n-1))*Math.pow(10, n-1);//Вычитаем из нужного числа первую цифру, помноженную на 10 в степени разряд-1
+n--;
+
+}
+while(!digits.isEmpty()) {
+System.out.print(digits.pop());
+}
+}
+ public static void ttt3(int number,int n){
+     ArrayDeque<Integer> numbers = new ArrayDeque<Integer>();
+   
+     while(n!=0) {
+numbers.add((int)(number/Math.pow(10, n-1)));//Выделяем целую часть при делении на 10 в степени разряд-1
+number-=(int)(number/Math.pow(10, n-1))*Math.pow(10, n-1);//Вычитаем из нужного числа первую цифру, помноженную на 10 в степени разряд-1
+n--;
+
+}
+ while(!numbers.isEmpty()) {
+System.out.print(numbers.pop());
+}    
+    
+ }
+ public static void ttt4(int number) {
+     ArrayDeque<Integer> numbers = new ArrayDeque<Integer>();
+
+while(number!=0) {
+numbers.add((int)(number%10));
+number/=10;
+}
+while(!numbers.isEmpty()) {
+System.out.print(numbers.pop());
+}
+}
+ public static void txt() throws FileNotFoundException, IOException{
+try{
+
+File file = new File("new.txt");
+FileReader fileReader = new FileReader(file); // поток который подключается к текстовому файлу
+BufferedReader bufferedReader = new BufferedReader(fileReader); // соединяем FileReader с BufferedReader
+
+
+String line;
+while((line = bufferedReader.readLine()) != null) {
+System.out.println(line);// выводим содержимое файла на экран построчно
+}
+bufferedReader.close();
+
+}
+catch(IOException ex) {
+
+System.out.println(ex.getMessage());
+
+}
+}
+}
+
+
+
