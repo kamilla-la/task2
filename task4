@@ -1,0 +1,68 @@
+import java.util.Collections;
+import java.util.Stack;
+
+public class Task4 {
+    MinAndMax max = (a, b) -> {
+        if (a > b) return a;
+        else return b;
+    };
+    MinAndMax min = (a, b) -> {
+        if (a > b) return b;
+        else return a;
+    };
+
+    public int pars(String str) {
+        String string=str.replace(" ", "");
+        int i = 0;
+        int leght = string.length();
+        Stack<Character> cr = new Stack<>();
+        while (i < leght) {
+            cr.push(string.charAt(i));
+            if (cr.peek() == ')') {
+                Stack<Character> dopStack = new Stack<>();
+                while (cr.peek() != '(') {
+                    dopStack.push(cr.pop());
+                }
+                dopStack.push(cr.pop());
+                dopStack.push(cr.pop());
+                MinAndMax mam = null;
+                char mm = dopStack.pop();
+                if (mm == 'm') {
+                    mam = min;
+                } else if (mm == 'M') {
+                    mam = max;
+                }
+                dopStack.pop();
+                String num = "";
+                while (dopStack.peek() != (char) 44) {
+                    num += dopStack.pop();
+                }
+                int left = Integer.parseInt(num);
+                dopStack.pop();
+                num = "";
+                while (dopStack.peek() != ')') {
+                    num += dopStack.pop();
+                }
+                int right = Integer.parseInt(num);
+                String s = ""+mam.comparsion(left, right);
+                for (int j=0;j<s.length();j++){
+                    cr.push(s.charAt(j));
+                }
+            }
+            i++;
+        }
+        Collections.reverse(cr);
+        String s = "";
+        while (!cr.isEmpty()) {
+            s += cr.pop();
+        }
+        return Integer.parseInt(s);
+    }
+}
+ interface MinAndMax {
+    int comparsion(int a, int b);
+}
+
+ interface Func {
+    double func(double a);
+}
