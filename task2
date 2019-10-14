@@ -1,0 +1,165 @@
+package Task2;
+
+import java.io.*;
+import java.time.LocalDate;
+import java.util.ArrayDeque;
+import java.util.Stack;
+
+public class Task2 {
+    private Stack<Person> peopleStack = null;
+    private ArrayDeque<Person> peopleQueue = null;
+    private String url;
+
+    public Task2() {
+
+    }
+
+    public Task2(String url) {
+        this.url = url;
+        read();
+    }
+
+    public Stack<Person> getPeopleStack() {
+        return peopleStack;
+    }
+
+    public ArrayDeque<Person> getPeopleQueue() {
+        return peopleQueue;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    private void read() {
+        peopleStack = new Stack<>();
+        peopleQueue = new ArrayDeque<>();
+        String[] strings;
+        String str;
+        try {
+            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(new FileInputStream(url), "Utf-8"));
+            while ((str = bufferedReader.readLine()) != null) {
+                strings = str.split(" ");
+                //getPeopleStack().push(new Person(strings[0], strings[1], strings[2], strings[3]));
+                getPeopleQueue().addFirst(new Person(strings[0], strings[1], strings[2], strings[3]));
+            }
+            bufferedReader.close();
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public String toString() {
+        String ageUp40Stack = "";
+        String ageDown40Stack = "";
+        String ageUp40Queue = "";
+        String ageDown40Queue = "";
+        Person personStack;
+        Person personQueue;
+        while (!peopleStack.isEmpty()) {
+            if (dateDifference((personStack = peopleStack.pop()).getDate()) < 40) {
+                ageDown40Stack += personStack.toString() + "\n";
+            } else {
+                ageUp40Stack += personStack.toString() + "\n";
+            }
+        }
+
+        while (!peopleQueue.isEmpty()) {
+            if (dateDifference((personQueue = peopleQueue.pop()).getDate()) < 40) {
+                ageDown40Queue += personQueue.toString() + "\n";
+            } else {
+                ageUp40Queue += personQueue.toString() + "\n";
+            }
+        }
+        return "Stack:\n"+ageDown40Stack+ageUp40Stack+"Queue:\n"+ageDown40Queue+ageUp40Queue;
+    }
+
+    private int dateDifference(String str) {
+        String[] date = str.split("\\.");
+
+        int day = Integer.parseInt(date[0]);
+        int month = Integer.parseInt(date[1]);
+        int year = Integer.parseInt(date[2]);
+
+        int prDay = LocalDate.now().getDayOfMonth();
+        int prMonth = LocalDate.now().getMonthValue();
+        int prYear = LocalDate.now().getYear();
+
+        int age = prYear - year;
+        if (age >= 0) {
+            if (prMonth == month) {
+                if (prDay == day) {
+                    return age;
+                } else if (prDay > day) {
+                    System.out.println("11111");
+                    return age;
+                } else {
+                    age--;
+                    return age;
+                }
+            } else if (prMonth > month) {
+                return age;
+            } else {
+                age--;
+                return age;
+            }
+        }
+        System.out.println("Некорректные данные!!!");
+        return 0;
+    }
+}
+ class Person {
+    public Person(String firstName, String secondName, String date, String gender) {
+        this.firstName = firstName;
+        this.secondName = secondName;
+        this.date = date;
+        this.gender = gender;
+    }
+
+    private String firstName;
+    private String secondName;
+    private String date;
+    private String gender;
+
+    public String getSecondName() {
+        return secondName;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setSecondName(String secondName) {
+        this.secondName = secondName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
+    @Override
+    public String toString() {
+        return firstName + " " + secondName + " " + date + " " + gender;
+    }
+}
