@@ -1,0 +1,26 @@
+
+import Task2.Task2;
+
+
+public class Main {
+    public static void main(String[] args) {
+ 
+       // System.out.println("Выполнение второго задания");
+     // Task2 personStackAndQueue = new Task2("nov.txt");
+       //System.out.println(personStackAndQueue.toString());
+
+        //Выполнение третьего задания
+        System.out.println("Выполнение третьего задания");
+        Task3 bl = new Task3();
+       System.out.println(bl.ballans("({[<)}]>"));
+        System.out.println();
+
+        //Выполнение четвертого задания
+        System.out.println("Выполнение четвертого задания");
+        Task4 parsExp=new Task4();
+      System.out.println(parsExp.pars("M(M(15,61) , m(12,6))"));
+        System.out.println();
+
+      
+    }
+}
