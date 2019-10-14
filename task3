@@ -1,0 +1,54 @@
+import java.util.Stack;
+
+public class Task3 {
+    public boolean ballans(String str) {
+        char[] chars = str.toCharArray();
+        Stack<Character> stack = new Stack<>();
+        for (int i = 0; i < chars.length; i++) {
+            if (chars[i] == '(' || chars[i] == '{' || chars[i] == '[' || chars[i] == '<') {
+                stack.push(chars[i]);
+            }
+            if (chars[i] == ')' || chars[i] == '}' || chars[i] == ']' || chars[i] == '>') {
+                if (stack.isEmpty()) {
+                    return false;
+                } else {
+                    if (control(stack.peek(), chars[i])) {
+                        stack.pop();
+                    } else return false;
+                }
+            }
+        }
+        if (stack.isEmpty()) return true;
+        return false;
+    }
+
+    private boolean control(Character peek, char aChar) {
+        switch (peek) {
+            case '(':
+                if (aChar == ')') {
+                    return true;
+                } else {
+                    return false;
+                }
+            case '{':
+                if (aChar == '}') {
+                    return true;
+                } else {
+                    return false;
+                }
+            case '[':
+                if (aChar == ']') {
+                    return true;
+                } else {
+                    return false;
+                }
+            case '<':
+                if (aChar == '>') {
+                    return true;
+                } else {
+                    return false;
+                }
+        }
+        return false;
+    }
+}
